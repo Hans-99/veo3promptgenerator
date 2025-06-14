@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veo 3 Prompt Generator by HansTyo</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-color: #2a2a2a;
+            --text-color: #e0e0e0;
+            --accent-color: #007bff;
+            --border-color: #444;
+            --label-color: #bbb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--primary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+        }
+
+        #prompt-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--label-color);
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        #results-container {
+            margin-top: 3rem;
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .result-column h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        #indonesian-prompt {
+            width: 100%;
+            height: 400px;
+            background-color: #252525;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1rem;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        #english-prompt {
+            width: 100%;
+            height: 400px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1rem;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+        }
+        
+        @media (max-width: 900px) {
+            #results-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Veo 3 Prompt Generator by HansTyo</h1>
+        <form id="prompt-form">
+            
+            <div class="form-group">
+                <label for="judul">1. Judul Scene</label>
+                <input type="text" id="judul" placeholder="Contoh: Terminal bus malam" value="Terminal bus malam">
+            </div>
+
+            <div class="form-group">
+                <label for="karakter">2. Deskripsi Karakter Inti</label>
+                <textarea id="karakter" placeholder="Contoh: Seorang vlogger wanita muda asal Minang berusia 27 tahun. Tubuh mungil, 158cm, proporsional. Kulit sawo matang cerah. Rambut ikal sebahu, diikat setengah. Wajah oval, alis tebal, mata hitam besar. Mengenakan jaket parasut kuning mustard, celana hitam, dan ransel kecil.">Seorang vlogger wanita muda asal Minang berusia 27 tahun.
+Perawakan/Bentuk Tubuh: tubuh mungil, tinggi 158cm, bentuk badan proporsional.
+Warna kulit: sawo matang cerah.
+Rambut: ikal sebahu, hitam kecokelatan, diikat setengah ke belakang.
+Wajah: wajah oval, alis tebal alami, mata hitam besar, senyum ramah, pipi merona, bibir natural dengan sentuhan lip tint.
+Pakaian: mengenakan jaket parasut warna kuning mustard dan celana panjang hitam, membawa ransel kecil.</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="suara-karakter">3. Detail Suara Karakter</label>
+                <textarea id="suara-karakter" placeholder="Contoh: Dia berbicara dengan suara wanita muda yang hangat dan penuh semangat. Nada: mezzo-soprano. Timbre: bersahabat dan enerjik. Aksen/Logat: logat Indonesia dengan sentuhan khas Minang halus. PENTING: Seluruh dialog harus dalam Bahasa Indonesia dengan pengucapan natural dan jelas.">Dia berbicara dengan suara wanita muda yang hangat dan penuh semangat.
+Nada: mezzo-soprano.
+Timbre: bersahabat dan enerjik.
+Aksen/Logat: logat Indonesia dengan sentuhan khas Minang halus, berbicara murni dalam Bahasa Indonesia.
+Cara Berbicara: tempo sedang-cepat, gaya bicara lincah dan ekspresif.
+PENTING: Seluruh dialog harus dalam Bahasa Indonesia dengan pengucapan natural dan jelas. Pastikan suara karakter ini konsisten di seluruh video.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="aksi">4. Aksi Karakter</label>
+                <input type="text" id="aksi" placeholder="Contoh: berjalan di sekitar terminal bus malam sambil melihat-lihat aktivitas penumpang dan pedagang." value="berjalan di sekitar terminal bus malam sambil melihat-lihat aktivitas penumpang dan pedagang.">
+            </div>
+
+            <div class="form-group">
+                <label for="ekspresi">5. Ekspresi Karakter</label>
+                <input type="text" id="ekspresi" placeholder="Contoh: Karakter menunjukkan ekspresi kagum dan antusias, sering tersenyum sambil melirik kamera." value="Karakter menunjukkan ekspresi kagum dan antusias, sering tersenyum sambil melirik kamera.">
+            </div>
+
+            <div class="form-group">
+                <label for="latar">6. Latar Tempat & Waktu</label>
+                <textarea id="latar" placeholder="Contoh: Latar tempat: di terminal bus antar kota malam hari, terdapat pedagang kaki lima, beberapa bus berjajar dengan lampu menyala. Waktu: malam hari, hujan rintik-rintik.">Latar tempat: di terminal bus antar kota malam hari, terdapat pedagang kaki lima di pinggir jalur keberangkatan, beberapa bus berjajar dengan lampu menyala.
+Waktu: malam hari, hujan rintik-rintik.</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="kamera">7. Detail Visual Tambahan - Gerakan Kamera</label>
+                <select id="kamera">
+                    <option value="Tracking Shot (Mengikuti Objek)">Tracking Shot (Mengikuti Objek)</option>
+                    <option value="Static (Statis)">Static (Statis)</option>
+                    <option value="Pan (Geser Horizontal)">Pan (Geser Horizontal)</option>
+                    <option value="Tilt (Geser Vertikal)">Tilt (Geser Vertikal)</option>
+                    <option value="Dolly (Maju/Mundur)">Dolly (Maju/Mundur)</option>
+                    <option value="Truck (Geser Kiri/Kanan)">Truck (Geser Kiri/Kanan)</option>
+                    <option value="Pedestal (Naik/Turun)">Pedestal (Naik/Turun)</option>
+                    <option value="Zoom In (Perbesar)">Zoom In (Perbesar)</option>
+                    <option value="Zoom Out (Perkecil)">Zoom Out (Perkecil)</option>
+                    <option value="Dolly Zoom (Efek Vertigo)">Dolly Zoom (Efek Vertigo)</option>
+                    <option value="Rack Focus (Pindah Fokus)">Rack Focus (Pindah Fokus)</option>
+                    <option value="Handheld (Genggam)">Handheld (Genggam)</option>
+                    <option value="Shake (Guncangan)">Shake (Guncangan)</option>
+                    <option value="Arc (Gerakan Melingkar)">Arc (Gerakan Melingkar)</option>
+                    <option value="3D Rotation (Rotasi 3D)">3D Rotation (Rotasi 3D)</option>
+                    <option value="Orbit (Mengorbit)">Orbit (Mengorbit)</option>
+                    <option value="Spiral (Spiral)">Spiral (Spiral)</option>
+                    <option value="Whip Pan (Geser Cepat)">Whip Pan (Geser Cepat)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pencahayaan">7. Detail Visual Tambahan - Pencahayaan</label>
+                <input type="text" id="pencahayaan" placeholder="Contoh: natural dari lampu jalan dan lampu bus, pantulan cahaya pada aspal basah." value="natural dari lampu jalan dan lampu bus, pantulan cahaya pada aspal basah.">
+            </div>
+            
+            <div class="form-group">
+                <label for="gaya">7. Detail Visual Tambahan - Gaya Video/Art Style</label>
+                <input type="text" id="gaya" placeholder="Contoh: cinematic realistis." value="cinematic realistis.">
+            </div>
+            
+            <div class="form-group">
+                <label for="kualitas">7. Detail Visual Tambahan - Kualitas Visual</label>
+                <select id="kualitas">
+                    <option value="Resolusi 4K">Resolusi 4K</option>
+                    <option value="Resolusi 1080p">Resolusi 1080p</option>
+                    <option value="Resolusi 8K">Resolusi 8K</option>
+                    <option value="Sangat Detail">Sangat Detail</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="suasana">8. Suasana Keseluruhan</label>
+                <input type="text" id="suasana" placeholder="Contoh: Suasana sibuk, ramai, dengan kesan perjalanan malam yang hidup dan dinamis meskipun hujan." value="Suasana sibuk, ramai, dengan kesan perjalanan malam yang hidup dan dinamis meskipun hujan.">
+            </div>
+
+            <div class="form-group">
+                <label for="ambience">9. Suara Lingkungan/Ambience</label>
+                <input type="text" id="ambience" placeholder="Contoh: SOUND: suara mesin bus menyala, pengumuman, derai hujan ringan, percakapan samar." value="SOUND: suara mesin bus menyala, pengumuman dari pengeras suara, derai hujan ringan, dan percakapan samar antar penumpang dan pedagang.">
+            </div>
+
+            <div class="form-group">
+                <label for="dialog">10. Dialog Karakter</label>
+                <textarea id="dialog" placeholder="Contoh: DIALOG dalam Bahasa Indonesia: Karakter berkata: Tiap kota punya terminal kayak gini, dan aku suka banget suasana malamnya… hangat walau gerimis begini. Rasanya kayak perjalanan baru mau dimulai.">DIALOG dalam Bahasa Indonesia: Karakter berkata: Tiap kota punya terminal kayak gini, dan aku suka banget suasana malamnya… hangat walau gerimis begini. Rasanya kayak perjalanan baru mau dimulai.</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="negatif">11. Negative Prompt</label>
+                <textarea id="negatif" placeholder="Contoh: Hindari: teks di layar, subtitle, tulisan di video, font, logo, distorsi, artefak, anomali, wajah ganda, anggota badan cacat, tangan tidak normal, orang tambahan, objek mengganggu, kualitas rendah, buram, glitch, suara robotik, suara pecah.">Hindari: teks di layar, subtitle, tulisan di video, font, logo, distorsi, artefak, anomali, wajah ganda, anggota badan cacat, tangan tidak normal, orang tambahan, objek mengganggu, kualitas rendah, buram, glitch, suara robotik, suara pecah.</textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Buat Prompt</button>
+        </form>
+
+        <div id="results-container">
+            <div class="result-column">
+                <h2>Prompt (Bahasa Indonesia)</h2>
+                <textarea id="indonesian-prompt"></textarea>
+            </div>
+            <div class="result-column">
+                <h2>Final Prompt (English)</h2>
+                <div id="english-prompt"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prompt-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // --- Get values from form ---
+            const judul = document.getElementById('judul').value.trim();
+            const karakter = document.getElementById('karakter').value.trim();
+            const suaraKarakter = document.getElementById('suara-karakter').value.trim();
+            const aksi = document.getElementById('aksi').value.trim();
+            const ekspresi = document.getElementById('ekspresi').value.trim();
+            const latar = document.getElementById('latar').value.trim();
+            const kamera = document.getElementById('kamera').value;
+            const pencahayaan = document.getElementById('pencahayaan').value.trim();
+            const gaya = document.getElementById('gaya').value.trim();
+            const kualitas = document.getElementById('kualitas').value;
+            const suasana = document.getElementById('suasana').value.trim();
+            const ambience = document.getElementById('ambience').value.trim();
+            const dialog = document.getElementById('dialog').value.trim();
+            const negatif = document.getElementById('negatif').value.trim();
+
+            // --- Indonesian Prompt Generation ---
+            let promptID = `Sebuah video sinematik dengan judul "${judul}".\n\n`;
+            promptID += `Fokus utama pada karakter: ${karakter}.\n\n`;
+            promptID += `Panduan suara untuk karakter adalah sebagai berikut: ${suaraKarakter}.\n\n`;
+            promptID += `Dalam scene ini, karakter akan melakukan aksi: ${aksi}. Ekspresi yang ditampilkan adalah ${ekspresi}.\n\n`;
+            promptID += `Setting scene adalah ${latar}.\n\n`;
+            promptID += `DETAIL VISUAL PENTING:\n`;
+            promptID += `- Gerakan Kamera: Menggunakan teknik ${kamera} untuk mengikuti karakter secara dinamis dan sinematik.\n`;
+            promptID += `- Desain Pencahayaan: Pencahayaan didesain agar terlihat ${pencahayaan}, menciptakan mood yang kuat.\n`;
+            promptID += `- Gaya Artistik: Mengadopsi gaya ${gaya} untuk keseluruhan video.\n`;
+            promptID += `- Kualitas Produksi: Direkam dalam ${kualitas} untuk detail visual yang tajam.\n\n`;
+            promptID += `Suasana keseluruhan yang ingin dicapai adalah ${suasana}.\n\n`;
+            promptID += `Efek suara lingkungan yang harus ada: ${ambience}.\n\n`;
+            promptID += `Dialog yang diucapkan oleh karakter (dalam Bahasa Indonesia): ${dialog}.\n\n`;
+            promptID += `HAL-HAL YANG HARUS DIHINDARI (NEGATIVE PROMPT): ${negatif}`;
+
+            document.getElementById('indonesian-prompt').value = promptID;
+            
+            // --- English Prompt Translation & Generation ---
+            // Simple "translation" logic using template literals
+            const kameraEn = kamera.split(' (')[0];
+            const kualitasEn = kualitas.replace("Resolusi", "Resolution").replace("Sangat Detail", "Hyper-detailed");
+
+            let promptEN = `A cinematic, realistic video of a bustling night bus terminal, drizzling with rain.
+
+A 27-year-old Minang female vlogger with a petite, proportional build (158cm) and bright tan skin is the main character. She has shoulder-length, brownish-black wavy hair tied back in a half-up style. Her face is oval with thick natural eyebrows, large black eyes, a friendly smile, rosy cheeks, and natural lips with a hint of lip tint. She wears a mustard yellow parachute jacket, black long pants, and carries a small backpack.
+
+The character walks around the terminal, observing the activities of passengers and vendors with an expression of awe and enthusiasm, often smiling and glancing at the camera.
+
+The scene is set at an intercity bus terminal at night. Street vendors line the departure lane, and several buses are parked with their lights on. It is drizzling, and the wet asphalt reflects the surrounding lights. The overall atmosphere is busy and lively, capturing the dynamic feeling of a night journey despite the rain.
+
+The camera follows the character with a cinematic tracking shot, moving from behind her to her side and then to the front, capturing her steps smoothly. The lighting is naturalistic, coming from streetlights and bus lights, creating beautiful reflections on the wet ground. The visual style is cinematic and realistic, rendered in 4K resolution.
+
+IMPORTANT VOICE GUIDANCE: The character speaks with a warm and spirited young female voice (mezzo-soprano, friendly and energetic timbre). She has a standard Indonesian accent with a subtle, gentle Minang touch, speaking purely in Indonesian. Her speech pace is medium-to-fast, lively, and expressive. It is crucial that her voice remains consistent throughout the video.
+
+SOUND: The ambient sound includes the hum of bus engines, announcements from a loudspeaker, the soft patter of light rain, and the faint chatter of passengers and vendors.
+
+DIALOGUE in Indonesian: The character says, "Tiap kota punya terminal kayak gini, dan aku suka banget suasana malamnya… hangat walau gerimis begini. Rasanya kayak perjalanan baru mau dimulai."
+
+NEGATIVE PROMPT: Avoid on-screen text, subtitles, watermarks, fonts, logos, distortion, artifacts, anomalies, duplicate faces, deformed limbs, abnormal hands, extra people, distracting objects, low quality, blurriness, glitches, robotic or broken audio.`;
+
+
+            document.getElementById('english-prompt').innerText = promptEN;
+            
+            // Show results
+            document.getElementById('results-container').style.display = 'grid';
+            // Scroll to the results
+            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Auto-fill the form on load for demonstration
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // No action needed on load anymore, placeholder text is sufficient.
+        });
+
+    </script>
+</body>
+</html> 
